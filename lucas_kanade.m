@@ -1,9 +1,9 @@
-function result = lucas_kanade()
+function v = lucas_kanade()
 img1 = imread('sphere1.ppm');
 img2 = imread('sphere2.ppm');
 
 image1 = convert2grayscale(img1);
-image2 = convert2grayscale(img1);
+image2 = convert2grayscale(img2);
 
 regions1 = img2regions(image1);
 regions2 = img2regions(image2);
@@ -12,8 +12,8 @@ regions2 = img2regions(image2);
 v = zeros(x_blocks, y_blocks, 2);
 for i = 1:x_blocks
    for j = 1:y_blocks
-       [A_T, b] = get_optical_flow(regions1(i, j), regions2(i, j));
-       v = A_T * b;
+       [A, b] = get_optical_flow(regions1(i, j), regions2(i, j));
+       v(i,j,:) = inv(A'*A)*A'*b;
    end
 end
 
@@ -41,10 +41,9 @@ region_size_vec_y = region_size * ones(1, y_regions);
 regions = mat2cell(image(1:x_size, 1:y_size), region_size_vec_y, region_size_vec_x);
 end
 
-function [A_T, b] = get_optical_flow(region1, region2)
-[Ix, Iy] = gradient(region1);
+function [A, b] = get_optical_flow(region1, region2)
+[Ix, Iy] = gradient(region1{1});
 A = [Ix(:), Iy(:)];
-It = region2 - region1;
+It = region2{1} - region1{1};
 b = -It(:);
-A_T = pinv(A);
 end

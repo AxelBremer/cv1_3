@@ -1,18 +1,18 @@
 function [H, r, c] = harris_corner_detector(image, kernel_size, threshold, sigma, print)
 %HARRIS_CORNER_DETECTOR
-G2 = gauss2D(sigma, kernel_size);
-G = gauss1D(sigma, kernel_size);
+G2 = gauss2D(sigma, 5);
+%G = gauss1D(sigma, 5);
 Gx = [-1 0 1 ; -2 0 2 ; -1 0 1];
 Gy = [-1 -2 -1 ; 0 0 0 ; 1 2 1];
 Ix = conv2(image, Gx, 'same');
 Iy = conv2(image, Gy, 'same');
 
-A = conv2(Ix.^2, G, 'same');
+A = conv2(Ix.^2, G2, 'same');
 B = conv2(Ix.*Iy, G2, 'same');
-C = conv2(Iy.^2, G, 'same');
+C = conv2(Iy.^2, G2, 'same');
 
 H = (A.*C - B.^2) - 0.04*(A+C).*(A+C);
-% H = (A.*C - B.^2)./(A+C).*(A+C);
+
 r = [];
 c = [];
 
