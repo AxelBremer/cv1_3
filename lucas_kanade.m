@@ -1,4 +1,4 @@
-function [vx, vy, axes, image1, image2] = lucas_kanade(im_path1, im_path2)
+function [vx, vy, x_axes, y_axes, image1, image2] = lucas_kanade(im_path1, im_path2)
 region_size = 15;
 
 img1 = imread(im_path1);
@@ -15,7 +15,8 @@ regions2 = img2regions(image2, region_size);
 vx = zeros(x_blocks, y_blocks);
 vy = zeros(x_blocks, y_blocks);
 
-axes = region_size * (1:y_blocks) - floor(region_size/2);
+x_axes = region_size * (1:x_blocks) - floor(region_size/2);
+y_axes = region_size * (1:y_blocks) - floor(region_size/2);
 for i = 1:x_blocks
    for j = 1:y_blocks
        [A, b] = get_optical_flow(regions1(i, j), regions2(i, j));
@@ -44,7 +45,7 @@ y_size = y_regions * region_size;
 region_size_vec_x = region_size * ones(1, x_regions);
 region_size_vec_y = region_size * ones(1, y_regions);
 
-regions = mat2cell(image(1:x_size, 1:y_size), region_size_vec_y, region_size_vec_x);
+regions = mat2cell(image(1:x_size, 1:y_size), region_size_vec_x, region_size_vec_y);
 end
 
 function [A, b] = get_optical_flow(region1, region2)
