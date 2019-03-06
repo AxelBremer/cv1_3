@@ -1,19 +1,27 @@
-function v = lucas_kanade()
-img1 = imread('sphere1.ppm');
-img2 = imread('sphere2.ppm');
+function [vx, vy, axes] = lucas_kanade(im_path1, im_path2)
+region_size = 15;
+
+img1 = imread(im_path1);
+img2 = imread(im_path2);
 
 image1 = convert2grayscale(img1);
 image2 = convert2grayscale(img2);
 
-regions1 = img2regions(image1);
-regions2 = img2regions(image2);
+regions1 = img2regions(image1, region_size);
+regions2 = img2regions(image2, region_size);
 
 [x_blocks, y_blocks] = size(regions1);
-v = zeros(x_blocks, y_blocks, 2);
+
+vx = zeros(x_blocks, y_blocks);
+vy = zeros(x_blocks, y_blocks);
+
+axes = region_size * (1:y_blocks) - floor(region_size/2);
 for i = 1:x_blocks
    for j = 1:y_blocks
        [A, b] = get_optical_flow(regions1(i, j), regions2(i, j));
-       v(i,j,:) = inv(A'*A)*A'*b;
+       v = inv(A'*A)*A'*b;
+       vx(i,j) = v(1);
+       vy(i,j) = v(2);
    end
 end
 
@@ -26,9 +34,7 @@ function image = convert2grayscale(img)
     image = im2double(img);
 end
 
-function regions = img2regions(image)
-region_size = 15;
-
+function regions = img2regions(image, region_size)
 x_regions = floor(size(image, 1)/ region_size);
 y_regions = floor(size(image, 2)/ region_size);
 
