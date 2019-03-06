@@ -1,2 +1,2 @@
-%tracking('pingpong');
-tracking('person_toy');
+tracking('pingpong');
+%tracking('person_toy');

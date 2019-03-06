@@ -23,8 +23,8 @@ for k=1:length(Files)
             if index_c > size(vx,1)
                 index_c = size(vx,1);
             end
-            r(i,1) = r(i,1) + round(1.5*vx(index_c,index_r));
-            c(i,1) = c(i,1) + round(1.5*vy(index_c,index_r));
+            r(i,1) = r(i,1) + round(1.7*vx(index_c,index_r));
+            c(i,1) = c(i,1) + round(1.7*vy(index_c,index_r));
             if r(i,1) < 1
                 r(i,1) = 1;
             end
