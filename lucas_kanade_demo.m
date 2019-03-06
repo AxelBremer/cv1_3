@@ -1,5 +1,5 @@
 [vx_synth, vy_synth, x_axes_synth, y_axes_synth, image1_synth, image2_synth] = lucas_kanade('synth1.pgm', 'synth2.pgm');
-[vx_sphere, vy_sphere, x_axes_sphere, y_axes_sphere image1_sphere, image2_sphere] = lucas_kanade('sphere1.ppm', 'sphere2.ppm');
+[vx_sphere, vy_sphere, x_axes_sphere, y_axes_sphere, image1_sphere, image2_sphere] = lucas_kanade('sphere1.ppm', 'sphere2.ppm');
 
 figure
 subplot(1,2,1);

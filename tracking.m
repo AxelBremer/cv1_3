@@ -9,7 +9,7 @@ for k=1:length(Files)
    images{k} = imread(FileNames{k});
 end
 
-[~, r, c] = harris_corner_detector(rgb2gray(images{1}), 99, 0.1, 10, 0);
+[~, r, c] = harris_corner_detector(im2double(rgb2gray(images{1})), 25, 0.1, 4, 0);
 
 for k=1:length(Files)
     if k > 1
@@ -23,8 +23,8 @@ for k=1:length(Files)
             if index_c > size(vx,1)
                 index_c = size(vx,1);
             end
-            r(i,1) = r(i,1) + round(vy(index_c,index_r));
-            c(i,1) = c(i,1) + round(vx(index_c,index_r));
+            r(i,1) = r(i,1) + round(1.5*vx(index_c,index_r));
+            c(i,1) = c(i,1) + round(1.5*vy(index_c,index_r));
             if r(i,1) < 1
                 r(i,1) = 1;
             end
