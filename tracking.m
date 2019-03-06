@@ -14,30 +14,28 @@ end
 for k=1:length(Files)
     if k > 1
         [vx,vy,~,~,~,~] = lucas_kanade(FileNames{k-1}, FileNames{k});
-        size(vy)
         for i = 1:size(r(:,1))
             index_r = ceil(r(i,1)/15);
             index_c = ceil(c(i,1)/15);
-            if index_r > size(vx(1,:))
-                index_r = size(vx(1,:));
+            if index_r > size(vx,2)
+                index_r = size(vx,2);
             end
-            if index_c > size(vx(:,1))
-                index_c = size(vx(:,1));
+            if index_c > size(vx,1)
+                index_c = size(vx,1);
             end
-            vy(index_c,index_r)
-            r(i,1) = r(i,1) + vy(index_c,index_r);
-            c(i,1) = c(i,1) + vx(index_c,index_r);
+            r(i,1) = r(i,1) + round(vy(index_c,index_r));
+            c(i,1) = c(i,1) + round(vx(index_c,index_r));
             if r(i,1) < 1
                 r(i,1) = 1;
             end
-            if r(i,1) > size(images{k}(1,:,1))
-                r(i,1) = size(images{k}(1,:,1));
+            if r(i,1) > size(images{k},2)
+                r(i,1) = size(images{k},2);
             end
             if c(i,1) < 1
                 c(i,1) = 1;
             end
-            if c(i,1) > size(images{k}(:,1,1))
-                c(i,1) = size(images{k}(:,1,1));
+            if c(i,1) > size(images{k},1)
+                c(i,1) = size(images{k},1);
             end
         end
     end
@@ -49,8 +47,6 @@ for k=1:length(Files)
         right_bound = c(i,1) + cross_size;
         bottom_bound = r(i,1) - cross_size;
         up_bound = r(i,1) + cross_size;
-        %r(i,1)
-        %c(i,1)
         if left_bound > 0 && right_bound <= x && bottom_bound > 0 && up_bound <= y
             images{k}(left_bound:right_bound,r(i,1),1) = 255;
             images{k}(c(i,1),bottom_bound:up_bound,1) = 255;
