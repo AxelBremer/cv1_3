@@ -7,6 +7,9 @@ img2 = imread(im_path2);
 image1 = convert2grayscale(img1);
 image2 = convert2grayscale(img2);
 
+image1 = im2double(image1);
+image2 = im2double(image2);
+
 regions1 = img2regions(image1, region_size);
 regions2 = img2regions(image2, region_size);
 
