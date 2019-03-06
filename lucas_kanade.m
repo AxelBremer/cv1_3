@@ -1,4 +1,4 @@
-function [vx, vy, axes] = lucas_kanade(im_path1, im_path2)
+function [vx, vy, axes, image1, image2] = lucas_kanade(im_path1, im_path2)
 region_size = 15;
 
 img1 = imread(im_path1);
